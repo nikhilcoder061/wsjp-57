@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+
+    // const currentDate = new Date(); //  alto = new Car()
+
+    // console.log(currentDate);
+    // console.log(currentDate.getHours());
+    // console.log(currentDate.getMonth());
+    // console.log(currentDate.getMinutes());
+    // console.log(currentDate.getSeconds());
+
+
+
+    // class person {
+    //     constructor(name, age, city) {
+    //         this.name = name,
+    //             this.age = age,
+    //             this.city = city
+    //     }
+    //     details() {
+    //         console.log(`hello Everyone this is ${this.name} & we are in ${this.city}`);
+    //     }
+
+    //     greet() {
+    //         console.log(`i am ${this.age} year old`);
+    //     }
+
+    // }
+
+    // const person1 = new person('wscube', 25, 'Jaipur');
+
+    // person1.greet();
+
+
+    // const person2 = new person('Himanshu', 35, "Delhi")
+    // person2.greet();
+    // // console.log(person1);
+
+    // promise create
+    const newPromise = new Promise(
+        (resolve, reject) => {
+            const success = false;
+            if (success == true) {
+                resolve("Data fetch succesfully")
+            } else {
+                reject("Data not fetch")
+            }
+        }
+    )
+
+    // prmise handeling
+
+    newPromise.then(
+        (success) => {
+            console.log(success);
+        }
+    ).catch(
+        (error) => {
+            console.log(error);
+        }
+    )
+
+
+
+
+</script>
+
+</html>
