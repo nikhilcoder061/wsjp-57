@@ -8,7 +8,7 @@ export default function EditCategory() {
     const categoryName = useRef();
     const categorySlug = useRef();
     const { category_id } = useParams();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     useEffect(
         () => {

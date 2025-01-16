@@ -14,6 +14,10 @@ import Store from './Website/pages/Store'
 import Cart from './Website/pages/Cart'
 import Context from './Context/Context'
 import EditCategory from './Admin/pages/category/EditCategory'
+import EditColor from './Admin/pages/color/EditColor'
+import MultipleImages from './Admin/pages/product/MultipleImages'
+import EditProduct from './Admin/pages/product/EditProduct'
+import Login from './Admin/pages/Login'
 
 export default function App() {
 
@@ -66,14 +70,30 @@ export default function App() {
             element: <AddColor />
           },
           {
+            path: 'color/edit/:color_id',
+            element: <EditColor />
+          },
+          {
             path: 'product',
             element: <ViewProduct />
           },
           {
             path: 'product/add',
             element: <AddProduct />
+          },
+          {
+            path: 'product/multipleimage/:productId',
+            element: <MultipleImages />
+          },
+          {
+            path: 'product/edit/:productId',
+            element: <EditProduct />
           }
         ]
+      },
+      {
+        path: '/admin/login',
+        element: <Login />
       }
     ]
   )

@@ -1,4 +1,4 @@
-const generateUniquImageName = require("../helping");
+const {generateUniquImageName} = require("../helping");
 const CategoryModel = require("../models/CategoryModel");
 
 class CategoryController {
