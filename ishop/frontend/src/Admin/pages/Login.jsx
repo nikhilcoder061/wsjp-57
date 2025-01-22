@@ -23,7 +23,12 @@ export default function Login() {
             (success) => {
                 toastNotify(success.data.msg, success.data.status);
                 if (success.data.status == 1) {
-                    dispatch(login({ data: success.data.admin }))
+                    dispatch(login(
+                        {
+                            data: success.data.admin,
+                            token: success.data.token
+                        }
+                    ))
                     navigate('/admin');
                 }
             }

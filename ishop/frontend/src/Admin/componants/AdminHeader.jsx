@@ -1,7 +1,14 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 export default function AdminHeader() {
+
+  const admin = useSelector((state) => state.admin.data);
+
+
   return (
-    <div className='text-center py-1 border-b font-bold text-lg'>Welcome to i Shop Admin Panel</div>
+    <div className='border-b flex justify-end font-bold'>
+      <h1>Hello {admin?.name} 👍</h1>
+    </div>
   )
 }

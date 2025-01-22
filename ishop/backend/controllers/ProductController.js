@@ -1,17 +1,34 @@
 const ProductModel = require("../models/ProductModel");
+const CategoryModel = require("../models/CategoryModel");
 const { generateUniquImageName } = require("../helping");
 
 class ProductController {
 
-    read(id) {
+    read(id, query) {
         return new Promise(
             async (resolve, reject) => {
                 try {
+
+                    const filterQuery = {}
+                    console.log(query);
+                    if (query.categorySlug != 'null') {
+                        const category = await CategoryModel.findOne(
+                            {
+                                slug: query.categorySlug
+                            }
+                        )
+                        filterQuery.category_id = category._id
+                    }
+
+                    if (query.product_color != 'null') {
+                        filterQuery.colors = query.product_color
+                    }
+
                     let product;
                     if (id) {
                         product = await ProductModel.findById(id);
                     } else {
-                        product = await ProductModel.find().populate(["category_id", "colors"]);
+                        product = await ProductModel.find(filterQuery).populate(["category_id", "colors"]).limit(query.limit);
                     }
 
                     resolve(

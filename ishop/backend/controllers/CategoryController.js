@@ -1,5 +1,6 @@
-const {generateUniquImageName} = require("../helping");
+const { generateUniquImageName } = require("../helping");
 const CategoryModel = require("../models/CategoryModel");
+const ProductModel = require("../models/ProductModel");
 
 class CategoryController {
 
@@ -69,17 +70,40 @@ class CategoryController {
                     let category;
                     if (id) {
                         category = await CategoryModel.findById(id);
+                        resolve(
+                            {
+                                msg: "Category found",
+                                status: 1,
+                                category
+                            }
+                        )
                     } else {
                         category = await CategoryModel.find();
-                    }
+                        const data = []
 
-                    resolve(
-                        {
-                            msg: "Category found",
-                            status: 1,
-                            category
-                        }
-                    )
+                        const allPromise = category.map(
+                            async (cat) => {
+                                const productCount = await ProductModel.findOne(
+                                    { category_id: cat._id }
+                                ).countDocuments();
+                                data.push(
+                                    {
+                                        ...cat.toJSON(), productCount
+                                    }
+                                )
+                            }
+                        )
+
+                        await Promise.all(allPromise);
+
+                        resolve(
+                            {
+                                msg: "Category found",
+                                status: 1,
+                                category: data
+                            }
+                        )
+                    }
 
                 } catch (error) {
                     reject(

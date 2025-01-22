@@ -6,7 +6,7 @@ import { IoIosColorPalette } from "react-icons/io";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { MdOutlineLogout } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../redux/reducer/AdminSlice';
+import { login, logout } from '../../redux/reducer/AdminSlice';
 
 export default function AdminSidebar() {
 
@@ -37,6 +37,20 @@ export default function AdminSidebar() {
   const admin = useSelector((state) => state.admin.data);
   const navigate = useNavigate();
   const dispatch = useDispatch()
+
+
+  useEffect(
+    () => {
+      const isAdmin = JSON.parse(localStorage.getItem('admin'));
+      const isAdmin_token = localStorage.getItem('admin_token');
+
+      if (isAdmin) {
+        dispatch(login({ data: isAdmin, token: isAdmin_token }))
+      }
+
+    }, []
+  )
+
 
   useEffect(
     () => {

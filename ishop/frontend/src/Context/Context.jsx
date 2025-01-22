@@ -50,14 +50,20 @@ export default function Context({ children }) {
         )
     }
 
-    const fetchProduct = (product_id = null) => {
+    const fetchProduct = (product_id = null, limit = 0, categorySlug = null, product_color = null) => {
 
         let productFetchApi = API_BASE_URL + PRODUCT_URL
         if (product_id != null) {
             productFetchApi = productFetchApi + `/${product_id}`
         }
 
-        axios.get(productFetchApi).then(
+        const query = new URLSearchParams();
+        query.append("limit", limit);
+        query.append("categorySlug", categorySlug);
+        query.append("product_color", product_color);
+
+
+        axios.get(productFetchApi + '?' + query).then(
             (success) => {
                 setAllProduct(success.data.product)
             }
