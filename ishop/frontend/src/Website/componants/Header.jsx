@@ -1,8 +1,12 @@
 import React from 'react'
 import { FaUserCircle, FaShoppingCart } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 export default function Header() {
+
+  const cart = useSelector((state) => state.cart.data);
+
   return (
     <header className="w-full">
       {/* First Row */}
@@ -11,10 +15,12 @@ export default function Header() {
           <FaUserCircle />
           <span>My Profile</span>
         </div>
-        <div className='flex gap-2 items-center'>
-          <FaShoppingCart />
-          <span>Cart (0)</span>
-        </div>
+        <Link to={'/cart'}>
+          <div className='flex gap-2 items-center'>
+            <FaShoppingCart />
+            <span>Cart ({cart.length})</span>
+          </div>
+        </Link>
       </div>
 
       {/* Second Row */}

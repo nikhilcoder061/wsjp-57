@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { MainContext } from '../../Context/Context'
 import { useParams, useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import ProductCard from './ProductCard';
 
 export default function Store() {
 
@@ -50,7 +51,7 @@ export default function Store() {
                 allCategory?.map(
                   (category, index) => {
                     return (
-                      <Link to={`/store/${category.slug}`}>
+                      <Link to={`/store/${category.slug}`} key={index}>
                         <li className='flex justify-between hover:bg-gray-200'>
                           <span className="block p-2 rounded cursor-pointer">
                             {category.name}
@@ -74,7 +75,7 @@ export default function Store() {
                 allColor?.map(
                   (color, index) => {
                     return (
-                      <li onClick={() => setProduct_color(color._id)} className='flex items-center justify-between'>
+                      <li key={index} onClick={() => setProduct_color(color._id)} className='flex items-center justify-between'>
                         <span className="block p-2 rounded hover:bg-gray-200 cursor-pointer">
                           {color.name}
                         </span>
@@ -107,25 +108,7 @@ export default function Store() {
               allProduct?.map(
                 (product, index) => {
                   return (
-                    <div className="bg-white border rounded-lg shadow-lg overflow-hidden">
-                      <img
-                        src={API_BASE_URL + `/images/product/${product.main_image}`}
-                        alt="Product Image"
-                        className="w-full h-48 object-cover"
-                      />
-                      <div className="p-4">
-                        <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
-                        <h3 className="text-sm text-gray-500 mb-2">{product.category_id.name}</h3>
-                        <div className="flex items-baseline mb-4">
-                          <span className="text-red-500 text-xl font-semibold">${product.final_price} </span>
-                          <span className="text-gray-500 line-through ml-2">${product.original_price}</span>
-                          <span className="text-green-500 text-sm ml-4">{product.discount_percentage}% off</span>
-                        </div>
-                        <button className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
-                          Add to Cart
-                        </button>
-                      </div>
-                    </div>
+                    <ProductCard product={product} API_BASE_URL={API_BASE_URL} key={index} />
                   )
                 }
               )

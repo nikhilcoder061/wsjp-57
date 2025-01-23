@@ -10,7 +10,6 @@ class ProductController {
                 try {
 
                     const filterQuery = {}
-                    console.log(query);
                     if (query.categorySlug != 'null') {
                         const category = await CategoryModel.findOne(
                             {
