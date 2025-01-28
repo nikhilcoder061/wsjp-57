@@ -6,15 +6,34 @@ import { Link } from 'react-router-dom';
 export default function Header() {
 
   const cart = useSelector((state) => state.cart.data);
-
+  const user = useSelector((state) => state.user.data);
+  console.log(user);
   return (
     <header className="w-full">
       {/* First Row */}
       <div className="flex justify-end items-center p-2 border-b gap-4 text-sm">
-        <div className='flex gap-2 items-center'>
-          <FaUserCircle />
-          <span>My Profile</span>
-        </div>
+        {
+          user
+            ?
+            <>
+              <div className='flex gap-2 items-center'>
+                <span>Hello, {user?.name}</span>
+              </div>
+              <div className='flex gap-2 items-center'>
+                <FaUserCircle />
+                <span>My Profile</span>
+              </div>
+            </>
+
+            :
+            <Link to={'/login?ref=home'}>
+              <div className='flex gap-2 items-center'>
+                <FaUserCircle />
+                <span>Login</span>
+              </div>
+            </Link>
+        }
+
         <Link to={'/cart'}>
           <div className='flex gap-2 items-center'>
             <FaShoppingCart />

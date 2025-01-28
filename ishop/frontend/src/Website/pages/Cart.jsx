@@ -1,11 +1,18 @@
 import React, { useContext, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { MainContext } from '../../Context/Context';
+import { useNavigate } from 'react-router-dom';
 
 export default function Cart() {
 
   const { API_BASE_URL, allProduct, fetchProduct } = useContext(MainContext);
   const cart = useSelector((state) => state.cart.data);
+  const user = useSelector((state) => state.user.data);
+  const navigate = useNavigate()
+
+  if (!user) {
+    navigate('/login?ref=cart')
+  }
 
   useEffect(
     () => {
@@ -120,7 +127,7 @@ export default function Cart() {
                   </tbody>
                 </table>
                 :
-                "No Product Found" 
+                "No Product Found"
             }
 
           </div>

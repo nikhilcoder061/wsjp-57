@@ -18,6 +18,8 @@ import EditColor from './Admin/pages/color/EditColor'
 import MultipleImages from './Admin/pages/product/MultipleImages'
 import EditProduct from './Admin/pages/product/EditProduct'
 import Login from './Admin/pages/Login'
+import UserLogin from './Website/pages/UserLogin'
+import UserRegister from './Website/pages/UserRegister'
 
 export default function App() {
 
@@ -40,6 +42,14 @@ export default function App() {
             element: <Cart />
           }
         ]
+      },
+      {
+        path: '/login',
+        element: <UserLogin />
+      },
+      {
+        path: '/register',
+        element: <UserRegister />
       },
       {
         path: "/admin",

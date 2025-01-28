@@ -8,7 +8,7 @@ export default function Context({ children }) {
     const API_BASE_URL = "http://localhost:5000";
     const CATEGORY_URL = "/category";
     const COLOR_URL = "/color";
-    const PRODUCT_URL = "/product"
+    const PRODUCT_URL = "/product";
     const toastNotify = (msg, status) => toast(msg, { type: status == true ? 'success' : 'error' });
     const [allCategory, setAllCategory] = useState([]);
     const [allColor, setAllColor] = useState([]);
