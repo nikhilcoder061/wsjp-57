@@ -40,5 +40,22 @@ UserRouter.post(
 )
 //login admin end
 
+UserRouter.post(
+    "/move-to-cart/:userId",
+    (req, res) => {
+        const result = new UserController().moveToCart(req.params.userId, req.body);
+        result.then(
+            (success) => {
+                res.send(success);
+            }
+        ).catch(
+            (error) => {
+                res.send(error);
+            }
+        )
+    }
+)
+
+
 
 module.exports = UserRouter;

@@ -7,7 +7,7 @@ export default function Header() {
 
   const cart = useSelector((state) => state.cart.data);
   const user = useSelector((state) => state.user.data);
-  console.log(user);
+  
   return (
     <header className="w-full">
       {/* First Row */}

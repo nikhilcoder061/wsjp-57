@@ -1,16 +1,18 @@
 import React, { useContext } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { MainContext } from '../../Context/Context';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../redux/reducer/UserSlice';
 import axios from 'axios';
+import { dbToCart } from '../../redux/reducer/CartSlice';
 
 export default function UserLogin() {
 
     const [searchParams, setSearchParams] = useSearchParams();
     const { toastNotify, API_BASE_URL } = useContext(MainContext);
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const cart = useSelector((state) => state.cart.data);
 
     const loginUser = (event) => {
         event.preventDefault();
@@ -30,6 +32,43 @@ export default function UserLogin() {
                             token: success.data.token
                         }
                     ))
+
+                    axios.post(API_BASE_URL + `/user/move-to-cart/${success.data.user._id}`, { cart }).then(
+                        (success) => {
+                            const latestCart = success.data.latestCart
+
+                            let totalOriginalPrice = 0;
+                            let totalFinalPrice = 0;
+
+                            const data = latestCart.map(
+                                (cartItem) => {
+                                    totalOriginalPrice += cartItem.product_id.original_price * cartItem.qty;
+                                    totalFinalPrice += cartItem.product_id.final_price * cartItem.qty
+                                    return (
+                                        {
+                                            product_id: cartItem.product_id._id,
+                                            qty: cartItem.qty
+                                        }
+                                    )
+                                }
+                            )
+                            dispatch(dbToCart(
+                                {
+                                    data: data,
+                                    totalOriginalPrice: totalOriginalPrice,
+                                    total: totalFinalPrice
+                                }
+                            ))
+
+                        }
+                    ).catch(
+                        (error) => {
+                            console.log(error);
+                        }
+                    )
+
+
+
                     if (searchParams.get('ref') == 'cart') {
                         navigate('/cart');
                     } else {

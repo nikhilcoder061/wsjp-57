@@ -1,4 +1,5 @@
 const { encryptedPassword, decryptedPassword, adminToken } = require("../helping");
+const CartModel = require("../models/CartModel");
 const UserModel = require("../models/UserModel");
 
 class UserController {
@@ -110,6 +111,78 @@ class UserController {
             }
         )
     }
+
+    moveToCart(userId, data) {
+        return new Promise(
+            async (resolve, reject) => {
+                try {
+                    if (data) {
+
+                        const allPromise = data.cart.map(
+                            async (cartItem) => {
+                                const existingProduct = await CartModel.findOne({ user_id: userId, product_id: cartItem.product_id }) ?? null;
+                                if (existingProduct) {
+                                    // already product added
+                                    console.log('in update');
+                                    await CartModel.updateOne(
+                                        { _id: existingProduct._id },
+                                        {
+                                            $inc: {
+                                                qty: Number(cartItem.qty)
+                                            }
+                                        }
+                                    )
+                                } else {
+                                    // new product add
+                                    console.log('create');
+                                    await new CartModel(
+                                        {
+                                            user_id: userId,
+                                            product_id: cartItem.product_id,
+                                            qty: Number(cartItem.qty)
+                                        }
+                                    ).save().then(
+                                        (success) => {
+                                            console.log(success);
+                                        }
+                                    ).catch(
+                                        (error) => {
+                                            console.log(error);
+                                        }
+                                    )
+                                }
+
+                            }
+                        )
+
+                        await Promise.all(allPromise);
+
+                        const latestCart = await CartModel.find({ user_id: userId }).populate('product_id', '_id original_price final_price');;
+                        resolve({
+                            latestCart,
+                            status: 1,
+                            msg: "Move to DB successful"
+                        });
+
+
+                    } else {
+                        console.log("cart Data Null");
+                    }
+
+
+                } catch (error) {
+                    console.log(error);
+                    reject(
+                        {
+                            msg: "Internal Server Error",
+                            status: 0
+                        }
+                    )
+                }
+            }
+        )
+    }
+
 
 
 }

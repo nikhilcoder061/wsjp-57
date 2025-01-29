@@ -25,7 +25,8 @@ export default function ProductCard({ product, API_BASE_URL }) {
                 <button onClick={() => dispatch(addToCart(
                     {
                         product_id: product._id,
-                        price: product.final_price
+                        price: product.final_price,
+                        totalOriginalPrice: product.original_price
                     }
                 ))} className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
                     Add to Cart

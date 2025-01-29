@@ -10,9 +10,14 @@ export default function Cart() {
   const user = useSelector((state) => state.user.data);
   const navigate = useNavigate()
 
-  if (!user) {
-    navigate('/login?ref=cart')
+  const verifyLogin = () => {
+    if (!user) {
+      navigate('/login?ref=cart')
+    } else {
+      navigate('/checkout')
+    }
   }
+
 
   useEffect(
     () => {
@@ -153,7 +158,7 @@ export default function Cart() {
                 <span>$46.98</span>
               </li>
             </ul>
-            <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button onClick={verifyLogin} className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Proceed to Checkout
             </button>
           </div>

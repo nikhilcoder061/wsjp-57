@@ -20,6 +20,7 @@ import EditProduct from './Admin/pages/product/EditProduct'
 import Login from './Admin/pages/Login'
 import UserLogin from './Website/pages/UserLogin'
 import UserRegister from './Website/pages/UserRegister'
+import CheckOut from './Website/pages/CheckOut'
 
 export default function App() {
 
@@ -50,6 +51,10 @@ export default function App() {
       {
         path: '/register',
         element: <UserRegister />
+      },
+      {
+        path: '/checkout',
+        element: <CheckOut />
       },
       {
         path: "/admin",
